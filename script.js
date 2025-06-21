@@ -34,8 +34,22 @@ async function loadCurrent() {
     const mdPath = `src/${name}/${files[fileIndex]}`;
     const res = await fetch(mdPath);
     const text = await res.text();
-    // 用 markdown-it 渲染喵
-    document.getElementById('markdown').innerHTML = md.render(text);
+
+    // 提取标题和作者（新格式："# 标题> 作者"）
+    const titleAuthorMatch = text.match(/^#\s+(.*?)\s*>\s*(.*?)\s*[\r\n]/);
+    const titleOnlyMatch = text.match(/^#\s+(.*?)\s*[\r\n]/);
+
+    // 更新显示框
+    document.getElementById('chapter-box').querySelector('h3').textContent = chapters[chIndex].name;
+    document.getElementById('title-box').querySelector('h2').textContent =
+        titleAuthorMatch ? titleAuthorMatch[1] : 
+        titleOnlyMatch ? titleOnlyMatch[1] : files[fileIndex].replace('.md', '');
+    document.getElementById('author-box').querySelector('p').textContent =
+        titleAuthorMatch ? titleAuthorMatch[2] : '未知作者';
+
+    // 严格匹配并移除所有作者行（支持多行和不同格式）
+    const contentWithoutAuthor = text.replace(/^>\s*(作者|).*[\r\n]+/gm, '');
+    document.getElementById('markdown').innerHTML = md.render(contentWithoutAuthor);
 }
 
 // 翻页逻辑（同 marked 版本喵）
@@ -78,7 +92,7 @@ document.addEventListener('keydown', e => {
 function generateTOC() {
     const tocList = document.getElementById('tocList');
     tocList.innerHTML = '';
-    
+
     chapters.forEach((chapter, index) => {
         const li = document.createElement('li');
         const link = document.createElement('a');
@@ -92,7 +106,7 @@ function generateTOC() {
             updateActiveTOC();
         };
         li.appendChild(link);
-        
+
         const subList = document.createElement('ul');
         chapter.files.forEach((file, fileIdx) => {
             const subLi = document.createElement('li');
@@ -111,7 +125,7 @@ function generateTOC() {
             subLi.appendChild(subLink);
             subList.appendChild(subLi);
         });
-        
+
         li.appendChild(subList);
         tocList.appendChild(li);
     });
@@ -122,11 +136,11 @@ function updateActiveTOC() {
     document.querySelectorAll('#sidebar a').forEach(link => {
         link.classList.remove('active');
     });
-    
+
     // 高亮当前章节
     const chapterLinks = document.querySelectorAll(`#sidebar li > a`);
     chapterLinks[chIndex]?.classList.add('active');
-    
+
     // 高亮当前文件
     const fileLink = document.querySelector(`#sidebar a[data-chapter="${chIndex}"][data-file="${fileIndex}"]`);
     if (fileLink) {

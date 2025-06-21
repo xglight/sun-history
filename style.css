@@ -105,6 +105,59 @@ body {
     font-weight: 500;
 }
 
+.metadata-boxes {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metadata-box {
+    flex: 1;
+    padding: 1.2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.metadata-box i {
+    font-size: 1.1rem;
+    color: #FF8C00;
+    min-width: 1.2rem;
+}
+
+#chapter-box {
+    border-left: 4px solid #4CAF50;
+}
+
+#title-box {
+    border-left: 4px solid #FF8C00;
+}
+
+#author-box {
+    border-left: 4px solid #FFD700;
+}
+
+#chapter-box h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+#title-box h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.4rem;
+}
+
+#author-box p {
+    margin: 0;
+    color: #555;
+    font-size: 1rem;
+}
+
 #content {
     position: relative;
     flex: 1;
