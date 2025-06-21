@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown 展示页</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 动态背景容器 -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- 顶栏 -->
+    <div id="topBar">
+        <h1>向阳历史</h1>
+    </div>
+
+    <!-- 主容器 -->
+    <div id="mainContainer">
+        <!-- 目录侧边栏 -->
+        <div id="sidebar">
+            <h3>目录</h3>
+            <ul id="tocList"></ul>
+        </div>
+
+        <!-- 内容区域 -->
+        <div id="content">
+            <div id="markdown"></div>
+            <div id="pager">
+                <button id="prev">上一页</button>
+                <button id="next">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 marked.js 和你的脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
